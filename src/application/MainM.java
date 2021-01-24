@@ -11,7 +11,7 @@ public class MainM extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/Menu.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/Authorization.fxml"));
 			Scene scene = new Scene(root,700,400);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Application");

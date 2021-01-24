@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class Menu {
+public class MenuController {
 
     @FXML
     private ResourceBundle resources;
@@ -41,7 +41,7 @@ public class Menu {
 				
 				e.printStackTrace();
 			}
-        	
+      
         	Parent root = loader.getRoot(); 
         	Stage stage = new Stage();
         	stage.setScene(new Scene(root));
