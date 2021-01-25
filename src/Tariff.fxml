@@ -2,14 +2,16 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #e8d3b3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ManageWorkers">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #e8d3b3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TariffController">
    <children>
       <AnchorPane prefHeight="77.0" prefWidth="700.0" style="-fx-background-color: #4f230d;">
          <children>
-            <Label alignment="CENTER" layoutX="160.0" layoutY="13.0" prefHeight="40.0" prefWidth="379.0" style="-fx-border-color: #e8d3b3; -fx-border-radius: 5; -fx-border-width: 3;" text="Учет заработной платы" textAlignment="CENTER" textFill="#e8d3b3">
+            <Label alignment="CENTER" layoutX="160.0" layoutY="13.0" prefHeight="40.0" prefWidth="379.0" style="-fx-border-color: #e8d3b3; -fx-border-radius: 5; -fx-border-width: 3;" text="Таблица коэффициентов" textAlignment="CENTER" textFill="#e8d3b3">
                <font>
                   <Font name="Gabriola" size="38.0" />
                </font>
@@ -21,7 +23,6 @@
             <Font name="Cambria Bold" size="14.0" />
          </font>
       </Button>
-      <AnchorPane layoutX="245.0" layoutY="78.0" prefHeight="319.0" prefWidth="455.0" />
       <Button fx:id="deleteTariffButton" layoutX="14.0" layoutY="177.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="226.0" style="-fx-background-color: #4f230d;" text="Удалить коэффициент" textAlignment="CENTER" textFill="#e8d3b3">
          <font>
             <Font name="Cambria Bold" size="14.0" />
@@ -37,5 +38,103 @@
             <Font name="Cambria Bold" size="14.0" />
          </font>
       </Button>
+      <Pane fx:id="addTariffPane" layoutX="249.0" layoutY="79.0" prefHeight="317.0" prefWidth="447.0" visible="false">
+         <children>
+            <TextField fx:id="addTariffCoefField" layoutX="208.0" layoutY="129.0" />
+            <TextField fx:id="addTariffLvlField" layoutX="208.0" layoutY="97.0" />
+            <Label fx:id="addTariffLvlLabel" alignment="TOP_RIGHT" layoutX="38.0" layoutY="99.0" prefHeight="20.0" prefWidth="149.0" text="Разряд:" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="addTariffCoefLabel" alignment="TOP_RIGHT" layoutX="38.0" layoutY="131.0" prefHeight="20.0" prefWidth="149.0" text="Коэффициент:" textAlignment="RIGHT" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="addTariffLabel" alignment="TOP_RIGHT" layoutX="84.0" layoutY="60.0" prefHeight="20.0" prefWidth="279.0" text="Чтобы добавить коэффициент, введите:" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="addTariffOKButton" layoutX="200.0" layoutY="172.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" style="-fx-background-color: #4f230d;" text="OK" textAlignment="CENTER" textFill="#e8d3b3">
+               <font>
+                  <Font name="Cambria Bold" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="deleteTariffPane" layoutX="249.0" layoutY="80.0" prefHeight="317.0" prefWidth="447.0" visible="false">
+         <children>
+            <TextField fx:id="deleteTariffCoefField" layoutX="208.0" layoutY="129.0" />
+            <TextField fx:id="deleteTariffLvlField" layoutX="208.0" layoutY="97.0" />
+            <Label fx:id="deleteTariffLvlLabel" alignment="TOP_RIGHT" layoutX="38.0" layoutY="99.0" prefHeight="20.0" prefWidth="149.0" text="Разряд:" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="deleteTariffCoefLabel" alignment="TOP_RIGHT" layoutX="38.0" layoutY="131.0" prefHeight="20.0" prefWidth="149.0" text="Коэффициент:" textAlignment="RIGHT" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="deleteTariffLabel" alignment="TOP_RIGHT" layoutX="84.0" layoutY="60.0" prefHeight="20.0" prefWidth="279.0" text="Чтобы удалить коэффициент, введите:" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="deleteTariffOKButton" layoutX="200.0" layoutY="172.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" style="-fx-background-color: #4f230d;" text="OK" textAlignment="CENTER" textFill="#e8d3b3">
+               <font>
+                  <Font name="Cambria Bold" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="aboutTariffPane" layoutX="249.0" layoutY="82.0" prefHeight="317.0" prefWidth="447.0" visible="false">
+         <children>
+            <TextField fx:id="aboutTariffLvlField" layoutX="218.0" layoutY="119.0" />
+            <Label fx:id="aboutTariffLvlLabel" alignment="TOP_RIGHT" layoutX="48.0" layoutY="121.0" prefHeight="20.0" prefWidth="149.0" text="Разряд:" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="aboutTariffOKButton" layoutX="194.0" layoutY="156.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" style="-fx-background-color: #4f230d;" text="OK" textAlignment="CENTER" textFill="#e8d3b3">
+               <font>
+                  <Font name="Cambria Bold" size="13.0" />
+               </font>
+            </Button>
+            <Label fx:id="aboutTariffLabel" alignment="TOP_RIGHT" layoutX="68.0" layoutY="82.0" prefHeight="20.0" prefWidth="331.0" text="Чтобы узнать значение коэффициента, введите:" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="updateTariffPane" layoutX="249.0" layoutY="79.0" prefHeight="317.0" prefWidth="447.0" visible="false">
+         <children>
+            <TextField fx:id="updateTariffCoefField" layoutX="208.0" layoutY="129.0" />
+            <TextField fx:id="updateTariffLvlField" layoutX="208.0" layoutY="97.0" />
+            <Label fx:id="updateTariffLvlLabel" alignment="TOP_RIGHT" layoutX="38.0" layoutY="99.0" prefHeight="20.0" prefWidth="149.0" text="Разряд:" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="updateTariffCoefLabel" alignment="TOP_RIGHT" layoutX="38.0" layoutY="131.0" prefHeight="20.0" prefWidth="149.0" text="Новый коэффициент:" textAlignment="RIGHT" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="updateTariffLabel" alignment="TOP_RIGHT" layoutX="84.0" layoutY="60.0" prefHeight="20.0" prefWidth="279.0" text="Чтобы изменить коэффициент, введите:" textFill="#4f230d">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="updateTariffOKButton" layoutX="200.0" layoutY="172.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" style="-fx-background-color: #4f230d;" text="OK" textAlignment="CENTER" textFill="#e8d3b3">
+               <font>
+                  <Font name="Cambria Bold" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
