@@ -3,7 +3,6 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-//import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +12,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-//import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.sql.*;
@@ -77,21 +75,6 @@ public class AuthorizationController {
                 	errorAlert.setContentText("Неверный логин или пароль");
                 	errorAlert.showAndWait();
                 };
-//        		PreparedStatement ps = con.prepareStatement("insert into manage_users (login,password) values (?,?)");
-//        		ps.setString(1, loginField.getText());
-//        		ps.setString(2, passwordField.getText());
-//        		try (ResultSet rs = ps.executeQuery()) {
-//                    if (rs.next()) {
-//                        isUserExists = true;
-//                    } catch(Exception e1) {
-//                		System.out.println(e1);
-//                	}
-////        		int x = ps.executeUpdate();
-////        		if (x>0) {
-////        			System.out.println("Authorisation done sucessfully");
-////        		}else {
-////        			System.out.println("Authorization failed");
-////        		}
         	}catch(Exception e) {
         		System.out.println(e);
         	}
