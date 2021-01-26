@@ -1,11 +1,6 @@
 package application;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,9 +12,6 @@ import javafx.scene.layout.Pane;
 
 public class PayController {
 	
-	private static final String url = "jdbc:mysql://localhost:3306/my";
-    private static final String user = "root";
-    private static final String password = "1234";
 
     @FXML
     private ResourceBundle resources;
@@ -156,9 +148,6 @@ public class PayController {
     @FXML
     void initialize() {
     	try {
-        	Class.forName("com.mysql.jdbc.Driver");
-    		Connection con = DriverManager.getConnection (url,user,password);
-    	
 	    	addPayButton.setOnAction(event ->{
 	    	addPayPane.setVisible(true);
 	    	deletePayPane.setVisible(false);
@@ -188,15 +177,7 @@ public class PayController {
 	    	});
 	    	
 	    	addPayOKButton.setOnAction(event-> {
-	    		try {
-					PreparedStatement ps = con.prepareStatement("insert into pay (worker1, payment, charge_pay, hold_pay, pay_off) values ( ?, ?, ?, ?, ?)");
-					ps.setString(1, addPayNameField.getText());
-					ps.setString(2, addPayPaymentField.getText());
-					ps.setString(3, addPayChargePayField.getText());
-					ps.setString(4, addPayHoldPayField.getText());
-					ps.setString(5, addPayPayOffField.getText());
-
-					int i = ps.executeUpdate();
+					int i = Pay.addPay(addPayNameField.getText(), addPayPaymentField.getText(), addPayChargePayField.getText(), addPayHoldPayField.getText(), addPayPayOffField.getText());
 	                    if (i != 0) {
 	                    	Alert errorAlert = new Alert(AlertType.INFORMATION);
 	                    	errorAlert.setHeaderText("Sucessfully!");
@@ -208,10 +189,6 @@ public class PayController {
 	                    	errorAlert.setContentText("Заработная плата не добавлена");
 	                    	errorAlert.showAndWait();
 	                    }
-	                
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 	    		addPayNameField.setText("");
 				addPayPaymentField.setText("");
 				addPayChargePayField.setText("");
@@ -220,11 +197,7 @@ public class PayController {
 	    	});
 
 	    	deletePayOKButton.setOnAction(event-> {
-	    		try {
-					PreparedStatement ps = con.prepareStatement("delete from pay where worker1=? and payment=?");
-					ps.setString(1, deletePayNameField.getText());
-					ps.setString(2, deletePayPaymentField.getText());
-	                int i = ps.executeUpdate();
+	    			int i = Pay.deletePay(deletePayNameField.getText(), deletePayPaymentField.getText());
 	                    if (i != 0) {
 	                    	Alert errorAlert = new Alert(AlertType.INFORMATION);
 	                    	errorAlert.setHeaderText("Sucessfully!");
@@ -236,49 +209,22 @@ public class PayController {
 	                    	errorAlert.setContentText("Заработная плата не удалена");
 	                    	errorAlert.showAndWait();
 	                    }
-	                
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 	    		deletePayNameField.setText("");
 	    		deletePayPaymentField.setText("");
 
 	    	});
 	    	
 	    	aboutPayOKButton.setOnAction(event-> {
-	    		try {
-	    			PreparedStatement ps = null;
-	    			ps = con.prepareStatement("SELECT * FROM pay where worker1=?");
-	    			ps.setString(1, aboutPayNameField.getText());
-	    			ResultSet res = ps.executeQuery();
-	    			String get = "";
-	    			if (res.next()) {
-	    				get = "ФИО: " + res.getString("worker1") + 
-	    						"\nЗаработная плата: " + res.getString("payment") +
-	    						"\nНачислено: " + res.getString("charge_pay") +
-	    						"\nУдержано: " + res.getString("hold_pay") + 
-	    						"\nВсего выплачено: " + res.getString("pay_off");
-	    		        }
+	    			String get = Pay.aboutPay(aboutPayNameField.getText());
 	    			Alert infAlert = new Alert(AlertType.INFORMATION);
 	            	infAlert.setHeaderText("Полученная информация");
 	            	infAlert.setContentText(get);
 	            	infAlert.showAndWait();
-	    		} catch (SQLException e) {
-	    			e.printStackTrace();
-	    		}
 	    		aboutPayNameField.setText("");
 	    	});
 	    	
 	    	updatePayOKButton.setOnAction(event-> {
-	    		try {
-					PreparedStatement ps = con.prepareStatement("update pay set  payment=?, charge_pay=?, hold_pay=?, pay_off=? where worker1=?");
-					ps.setString(1, updatePayPaymentField.getText());
-					ps.setString(2, updatePayChargePayField.getText());
-					ps.setString(3, updatePayHoldPayField.getText());
-					ps.setString(4, updatePayPayOffField.getText());
-					ps.setString(5, updatePayNameField.getText());
-
-	                int i = ps.executeUpdate();
+	    		int i = Pay.updatePay(updatePayPaymentField.getText(), updatePayChargePayField.getText(), updatePayHoldPayField.getText(), updatePayPayOffField.getText(), updatePayNameField.getText());
 	                    if (i != 0) {
 	                    	Alert errorAlert = new Alert(AlertType.INFORMATION);
 	                    	errorAlert.setHeaderText("Sucessfully!");
@@ -290,10 +236,6 @@ public class PayController {
 	                    	errorAlert.setContentText("Данные не изменены");
 	                    	errorAlert.showAndWait();
 	                    }
-	                
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 	    		updatePayPaymentField.setText("");
 	    		updatePayChargePayField.setText("");
 	    		updatePayHoldPayField.setText("");

@@ -1,11 +1,6 @@
 package application;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -16,10 +11,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 
 public class TariffController {
-	
-	private static final String url = "jdbc:mysql://localhost:3306/my";
-    private static final String user = "root";
-    private static final String password = "1234";
 
     @FXML
     private ResourceBundle resources;
@@ -120,8 +111,6 @@ public class TariffController {
     @FXML
     void initialize() {
     	try {
-        	Class.forName("com.mysql.jdbc.Driver");
-    		Connection con = DriverManager.getConnection (url,user,password);
     		
     			addTariffButton.setOnAction(event ->{
 	    	    	addTariffPane.setVisible(true);
@@ -152,12 +141,7 @@ public class TariffController {
         	    });
     		
     		addTariffOKButton.setOnAction(event-> {
-	    		try {
-					PreparedStatement ps = con.prepareStatement("insert into tariff (level,coef) values ( ?, ?)");
-					ps.setInt(1, Integer.parseInt(addTariffLvlField.getText()));
-					ps.setString(2, addTariffCoefField.getText());				
-
-					int i = ps.executeUpdate();
+					int i = Tariff.addTariff(addTariffLvlField.getText(), addTariffCoefField.getText());
 	                    if (i != 0) {
 	                    	Alert errorAlert = new Alert(AlertType.INFORMATION);
 	                    	errorAlert.setHeaderText("Sucessfully!");
@@ -169,20 +153,12 @@ public class TariffController {
 	                    	errorAlert.setContentText("Коэффициент не добавлен");
 	                    	errorAlert.showAndWait();
 	                    }
-	                
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 	    		addTariffCoefField.setText("");
 	    		addTariffLvlField.setText("");   		
 	    	});
     		
     		deleteTariffOKButton.setOnAction(event-> {
-        		try {
-    				PreparedStatement ps = con.prepareStatement("delete from tariff where level = ? and coef = ?");
-    				ps.setInt(1, Integer.parseInt(deleteTariffLvlField.getText()));
-    				ps.setString(2, deleteTariffCoefField.getText());
-                    int i = ps.executeUpdate();
+    				int i = Tariff.deleteTariff(deleteTariffLvlField.getText(), deleteTariffCoefField.getText());
                         if (i != 0) {
                         	Alert errorAlert = new Alert(AlertType.INFORMATION);
                         	errorAlert.setHeaderText("Sucessfully!");
@@ -194,43 +170,22 @@ public class TariffController {
                         	errorAlert.setContentText("Коэффициент не удален");
                         	errorAlert.showAndWait();
                         }
-                    
-    			} catch (SQLException e) {
-    				e.printStackTrace();
-    			}
         		deleteTariffLvlField.setText("");
         		deleteTariffCoefField.setText("");
 
         	});
     		
     		aboutTariffOKButton.setOnAction(event-> {
-	    		try {
-	    			PreparedStatement ps = null;
-	    			ps = con.prepareStatement("SELECT * FROM tariff where level=?");
-	    			ps.setInt(1, Integer.parseInt(aboutTariffLvlField.getText()));
-	    			ResultSet res = ps.executeQuery();
-	    			String get = "";
-	    			if (res.next()) {
-	    				get = "Разряд: " + res.getInt("level") + 
-	    						"\nКоэффициент: " + res.getString("coef");
-	    		        }
+	    			String get = Tariff.aboutTariff(aboutTariffLvlField.getText());
 	    			Alert infAlert = new Alert(AlertType.INFORMATION);
 	            	infAlert.setHeaderText("Полученная информация");
 	            	infAlert.setContentText(get);
 	            	infAlert.showAndWait();
-	    		} catch (SQLException e) {
-	    			e.printStackTrace();
-	    		}
 	    		aboutTariffLvlField.setText("");
 	    	});
     		
     		updateTariffOKButton.setOnAction(event-> {
-	    		try {
-					PreparedStatement ps = con.prepareStatement("update tariff set coef=? where level=?");
-					ps.setString(1, updateTariffCoefField.getText());
-					ps.setInt(2, Integer.parseInt(updateTariffLvlField.getText()));
-
-	                int i = ps.executeUpdate();
+					int i = Tariff.updateTariff(updateTariffCoefField.getText(), updateTariffLvlField.getText());
 	                    if (i != 0) {
 	                    	Alert errorAlert = new Alert(AlertType.INFORMATION);
 	                    	errorAlert.setHeaderText("Sucessfully!");
@@ -242,15 +197,11 @@ public class TariffController {
 	                    	errorAlert.setContentText("Коэффициент не изменен");
 	                    	errorAlert.showAndWait();
 	                    }
-	                
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 	    		updateTariffCoefField.setText("");
 	    		updateTariffLvlField.setText("");
 	    	});
     		
-    	} catch (SQLException | ClassNotFoundException e) {
+    	} catch (Exception e) {
 			e.printStackTrace();
 		}
 
