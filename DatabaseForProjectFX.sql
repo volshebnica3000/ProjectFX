@@ -49,9 +49,9 @@ CREATE TABLE IF NOT EXISTS `manage_workers` (
   KEY `fk_Manage_workers_Pay` (`pay_pay_id`),
   CONSTRAINT `fk_Manage_workers_Manage_users` FOREIGN KEY (`Manage_users_login`) REFERENCES `manage_users` (`login`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_pay_w` FOREIGN KEY (`pay_pay_id`) REFERENCES `pay` (`pay_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=cp1251;
 
--- Dumping data for table my.manage_workers: ~6 rows (approximately)
+-- Dumping data for table my.manage_workers: ~7 rows (approximately)
 /*!40000 ALTER TABLE `manage_workers` DISABLE KEYS */;
 INSERT INTO `manage_workers` (`w_name`, `w_position`, `w_level`, `if_trade_union`, `Manage_users_login`, `w_id`, `pay_pay_id`) VALUES
 	('Victor Nikiforov', 'turner', 2, '1', 'user01', 1, 1),
@@ -59,7 +59,8 @@ INSERT INTO `manage_workers` (`w_name`, `w_position`, `w_level`, `if_trade_union
 	('Otabek Altin', 'electrician', 2, '2', 'user03', 3, 3),
 	('Yuuri Katsuki', 'machine operator', 3, '2', 'user04', 4, 4),
 	('Stas Asket', 'turner', 2, '2', 'user06', 7, NULL),
-	('tt', 'ttt', 2, '2', 'user08', 15, NULL);
+	('tt', 'ttt', 2, '2', 'user08', 15, NULL),
+	('new', 'e', 2, '2', 'user09', 16, NULL);
 /*!40000 ALTER TABLE `manage_workers` ENABLE KEYS */;
 
 -- Dumping structure for table my.pay
@@ -72,16 +73,17 @@ CREATE TABLE IF NOT EXISTS `pay` (
   `pay_off` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`pay_id`),
   UNIQUE KEY `pay_id_UNIQUE` (`pay_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=cp1251;
 
--- Dumping data for table my.pay: ~5 rows (approximately)
+-- Dumping data for table my.pay: ~6 rows (approximately)
 /*!40000 ALTER TABLE `pay` DISABLE KEYS */;
 INSERT INTO `pay` (`pay_id`, `worker1`, `payment`, `charge_pay`, `hold_pay`, `pay_off`) VALUES
 	(1, 'Victor Nikiforov', '20167', '20167', '2064', '50364'),
 	(2, 'Yuri Plisetsky', '19659', '20000', '1064', '40364'),
 	(3, 'Otabek Altin', '18596', '19600', '1100', '30364'),
 	(4, 'Yuuri Katsuki', '28596', '28600', '2968', '78569'),
-	(7, 'pup', '1', '2', '3', '4');
+	(7, 'pup', '1', '2', '3', '4'),
+	(8, 'wq', '85', '86', '87', '88');
 /*!40000 ALTER TABLE `pay` ENABLE KEYS */;
 
 -- Dumping structure for table my.tariff
@@ -90,9 +92,9 @@ CREATE TABLE IF NOT EXISTS `tariff` (
   `level` int(11) NOT NULL,
   `coef` varchar(45) NOT NULL,
   PRIMARY KEY (`Tar_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=cp1251;
 
--- Dumping data for table my.tariff: ~7 rows (approximately)
+-- Dumping data for table my.tariff: ~9 rows (approximately)
 /*!40000 ALTER TABLE `tariff` DISABLE KEYS */;
 INSERT INTO `tariff` (`Tar_id`, `level`, `coef`) VALUES
 	(1, 1, '9'),
@@ -101,7 +103,9 @@ INSERT INTO `tariff` (`Tar_id`, `level`, `coef`) VALUES
 	(4, 4, '2.4'),
 	(5, 5, '2.8'),
 	(6, 6, '3.3'),
-	(8, 1, '1,1');
+	(8, 1, '1,1'),
+	(9, 6, '6.6'),
+	(10, 9, '6.2');
 /*!40000 ALTER TABLE `tariff` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
