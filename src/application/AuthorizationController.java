@@ -1,3 +1,4 @@
+
 package application;
 
 import java.io.IOException;
@@ -14,12 +15,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.sql.*;
 
 public class AuthorizationController {
-	private static final String url = "jdbc:mysql://localhost:3306/my";
-    private static final String user = "root";
-    private static final String password = "1234";
 
     @FXML
     private ResourceBundle resources;
@@ -39,45 +36,28 @@ public class AuthorizationController {
     @FXML
     void initialize() {
         signInButton.setOnAction(event -> {
-        	
-        	try {
-        		Boolean isUserExists = false;
-        		Class.forName("com.mysql.jdbc.Driver");
-        		Connection con = DriverManager.getConnection (url,user,password);
-        		try (PreparedStatement ps = con.prepareStatement("select 1 from `Manage_users` where `Login` = ? and `Password` = ?")) {
-                    ps.setString(1, loginField.getText());
-                    ps.setString(2, passwordField.getText());
-                    try (ResultSet rs = ps.executeQuery()) {
-                        if (rs.next()) {
-                            isUserExists = true;
-                        }
-                    }
-                }
-                
-                if (isUserExists) {
-                	Stage stage1 = (Stage) signInButton.getScene().getWindow();
-                	stage1.close();
-                	FXMLLoader loader = new FXMLLoader();
-                	loader.setLocation(getClass().getResource("/Menu.fxml"));
-                	try {
-        				loader.load();
-        			} catch (IOException e) {
-        				
-        				e.printStackTrace();
-        			}
-                    Parent root = loader.getRoot(); 
-                	Stage stage = new Stage();
-                	stage.setScene(new Scene(root));
-                	stage.showAndWait();                	
-                } else {
-                	Alert errorAlert = new Alert(AlertType.ERROR);
-                	errorAlert.setHeaderText("Ошибка!");
-                	errorAlert.setContentText("Неверный логин или пароль");
-                	errorAlert.showAndWait();
-                };
-        	}catch(Exception e) {
-        		System.out.println(e);
-        	}
+        	Boolean isUserExists = Authorization.SignInn(loginField.getText(), passwordField.getText());
+        	if (isUserExists) {
+            	Stage stage1 = (Stage) signInButton.getScene().getWindow();
+            	stage1.close();
+            	FXMLLoader loader = new FXMLLoader();
+            	loader.setLocation(getClass().getResource("/Menu.fxml"));
+            	try {
+    				loader.load();
+    			} catch (IOException e) {
+    				
+    				e.printStackTrace();
+    			}
+                Parent root = loader.getRoot(); 
+            	Stage stage = new Stage();
+            	stage.setScene(new Scene(root));
+            	stage.showAndWait();                	
+            } else {
+            	Alert errorAlert = new Alert(AlertType.ERROR);
+            	errorAlert.setHeaderText("Ошибка!");
+            	errorAlert.setContentText("Неверный логин или пароль");
+            	errorAlert.showAndWait();
+            };
         });
     }
     

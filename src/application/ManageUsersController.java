@@ -1,11 +1,7 @@
 package application;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -18,9 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 
 public class ManageUsersController {
-	private static final String url = "jdbc:mysql://localhost:3306/my";
-    private static final String user = "root";
-    private static final String password = "1234";
+	
     
     @FXML
     private ResourceBundle resources;
@@ -139,8 +133,7 @@ public class ManageUsersController {
     @FXML
     void initialize() {    	
     	try {
-    	Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection (url,user,password);
+    	
 		
     	addUserButton.setOnAction(event -> {
     		deleteUserPane.setVisible(false);
@@ -184,11 +177,7 @@ public class ManageUsersController {
     	
     	
     	addUserOKButton.setOnAction(event-> {
-    		try {
-				PreparedStatement ps = con.prepareStatement("insert into manage_users (login,password) values (?,?)");
-				ps.setString(1, addUserLoginField.getText());
-                ps.setString(2, addUserPasswordField.getText());
-                int i = ps.executeUpdate();
+    		int i = ManageUsers.addUser(addUserLoginField.getText(), addUserPasswordField.getText());
                     if (i != 0) {
                     	Alert errorAlert = new Alert(AlertType.INFORMATION);
                     	errorAlert.setHeaderText("Sucessfully!");
@@ -200,19 +189,12 @@ public class ManageUsersController {
                     	errorAlert.setContentText("Пользователь не добавлен");
                     	errorAlert.showAndWait();
                     }
-                
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
     		addUserLoginField.setText("");
     		addUserPasswordField.setText("");
     	});
 	
     	deleteUserOKButton.setOnAction(event-> {
-    		try {
-				PreparedStatement ps = con.prepareStatement("delete from manage_users where login=?");
-				ps.setString(1, deleteUserLoginField.getText());
-                int i = ps.executeUpdate();
+    		int i = ManageUsers.deleteUser(deleteUserLoginField.getText());  		
                     if (i != 0) {
                     	Alert errorAlert = new Alert(AlertType.INFORMATION);
                     	errorAlert.setHeaderText("Sucessfully!");
@@ -224,45 +206,20 @@ public class ManageUsersController {
                     	errorAlert.setContentText("Пользователь не удален");
                     	errorAlert.showAndWait();
                     }
-                
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
     		deleteUserLoginField.setText("");
     	});
 	
     	aboutUserOKButton.setOnAction(event-> {
-    		try {
-			PreparedStatement ps = null;
-			ps = con.prepareStatement("SELECT * FROM manage_users where login=?");
-			ps.setString(1, aboutUserLoginField.getText());
-			ResultSet res = ps.executeQuery();
-			String get = "";
-			if (res.next())
-		       {
-				get = "Логин пользователя: " + res.getString("login") + "\nПароль пользователя: " +res.getString("password");
-		        }
+    		String get = ManageUsers.aboutUser(aboutUserLoginField.getText());
 			Alert infAlert = new Alert(AlertType.INFORMATION);
         	infAlert.setHeaderText("Полученная информация");
         	infAlert.setContentText(get);
         	infAlert.showAndWait();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		aboutUserLoginField.setText("");
 	});
     	
     	searchUserOKButton.setOnAction(event-> {
-    		try {
-			PreparedStatement ps = null;
-			ps = con.prepareStatement("SELECT * FROM manage_users where login=?");
-			ps.setString(1, searchUserLoginField.getText());
-			ResultSet res = ps.executeQuery();
-			String get = "";
-			if (res.next())
-		       {
-				get = "Логин пользователя: " + res.getString("login") + "\nПароль пользователя: " +res.getString("password");
-		        }
+			String get = ManageUsers.searchUser(searchUserLoginField.getText());
 			if (get=="") {
 				Alert infAlert = new Alert(AlertType.INFORMATION);
 	        	infAlert.setHeaderText("Пользователь не найден!");
@@ -274,18 +231,11 @@ public class ManageUsersController {
         	infAlert.setContentText(get);
         	infAlert.showAndWait();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		searchUserLoginField.setText("");		
 	});
     	
     	updateUserOKButton.setOnAction(event-> {
-    		try {
-				PreparedStatement ps = con.prepareStatement("UPDATE manage_users SET password=? WHERE login=?");
-				ps.setString(1, updateUserPasswordField.getText());
-				ps.setString(2, updateUserLoginField.getText());
-                int i = ps.executeUpdate();
+				int i = ManageUsers.updateUser(updateUserPasswordField.getText(), updateUserLoginField.getText());
                     if (i != 0) {
                     	Alert errorAlert = new Alert(AlertType.INFORMATION);
                     	errorAlert.setHeaderText("Sucessfully!");
@@ -297,16 +247,9 @@ public class ManageUsersController {
                     	errorAlert.setContentText("Пароль не изменен");
                     	errorAlert.showAndWait();
                     }
-                
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
     		updateUserLoginField.setText("");
     		updateUserPasswordField.setText("");
     	});
-    	
-    	
-    	
     	
     	
     	} catch (Exception e) {
