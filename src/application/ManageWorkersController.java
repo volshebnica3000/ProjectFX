@@ -1,11 +1,6 @@
 package application;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,10 +12,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 
 public class ManageWorkersController {
-	private static final String url = "jdbc:mysql://localhost:3306/my";
-    private static final String user = "root";
-    private static final String password = "1234";
-
     @FXML
     private ResourceBundle resources;
 
@@ -156,8 +147,6 @@ public class ManageWorkersController {
     @FXML
     void initialize() {
     	try {
-        	Class.forName("com.mysql.jdbc.Driver");
-    		Connection con = DriverManager.getConnection (url,user,password);
     	
     	addWorkerButton.setOnAction(event -> {
     		deleteWorkerPane.setVisible(false);
@@ -189,17 +178,9 @@ public class ManageWorkersController {
     	
     	
     	addWorkerOKButton.setOnAction(event-> {
-    		try {
-				PreparedStatement ps = con.prepareStatement("insert into manage_workers (w_name, w_position, w_level, if_trade_union, Manage_users_login, Tariff_Tar_id) values (?, ?, ?, ?, ?, ?)");
     			String uni = "1";
     			if ((addWorkerUnionCheckBox.isSelected())==true) uni="2";     			
-				ps.setString(1, addWorkerNameField.getText());
-				ps.setString(2, addWorkerPosField.getText());
-				ps.setInt(3, Integer.parseInt(addWorkerLvlField.getText()));
-				ps.setString(4, uni);
-				ps.setString(5, addWorkerLoginField.getText());
-				ps.setInt(6, Integer.parseInt(addWorkerLvlField.getText()));
-                int i = ps.executeUpdate();
+				int i = ManageWorkers.addWorker(addWorkerNameField.getText(), addWorkerPosField.getText(), addWorkerLvlField.getText(), uni, addWorkerLoginField.getText());
                     if (i != 0) {
                     	Alert errorAlert = new Alert(AlertType.INFORMATION);
                     	errorAlert.setHeaderText("Sucessfully!");
@@ -211,10 +192,6 @@ public class ManageWorkersController {
                     	errorAlert.setContentText("Сотрудник не добавлен");
                     	errorAlert.showAndWait();
                     }
-                
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
     		addWorkerLoginField.setText("");
     		addWorkerNameField.setText("");
     		addWorkerLvlField.setText("");
@@ -225,11 +202,7 @@ public class ManageWorkersController {
     	
     	
     	deleteWorkerOKButton.setOnAction(event-> {
-    		try {
-				PreparedStatement ps = con.prepareStatement("delete from manage_workers where w_name = ? and w_position = ?");
-				ps.setString(1, deleteWorkerNameField.getText());
-				ps.setString(2, deleteWorkerPosField.getText());
-                int i = ps.executeUpdate();
+				int i = ManageWorkers.deleteWorker(deleteWorkerNameField.getText(), deleteWorkerPosField.getText());
                     if (i != 0) {
                     	Alert errorAlert = new Alert(AlertType.INFORMATION);
                     	errorAlert.setHeaderText("Sucessfully!");
@@ -241,54 +214,24 @@ public class ManageWorkersController {
                     	errorAlert.setContentText("Пользователь не удален");
                     	errorAlert.showAndWait();
                     }
-                
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
     		deleteWorkerNameField.setText("");
     		deleteWorkerPosField.setText("");
 
     	});
     	
     	aboutWorkerOKButton.setOnAction(event-> {
-    		try {
-			PreparedStatement ps = null;
-			ps = con.prepareStatement("SELECT * FROM manage_workers where w_name=?");
-			ps.setString(1, aboutWorkerNameField.getText());
-			ResultSet res = ps.executeQuery();
-			String get = "";
-			String uni = "не состоит в профсоюзе";
-			if (res.next())
-		       {
-				if (Integer.parseInt(res.getString("if_trade_union"))==2) uni="состоит в профсоюзе";
-				get = "ФИО: " + res.getString("w_name") + 
-						"\nДолжность: " + res.getString("w_position") +
-						"\nРазряд: " + res.getString("w_level") +
-						"\nУчастие в профсоюзе: " + uni + 
-						"\nЛогин: " + res.getString("Manage_users_login");
-		        }
+			String get = ManageWorkers.aboutWorker(aboutWorkerNameField.getText());
 			Alert infAlert = new Alert(AlertType.INFORMATION);
         	infAlert.setHeaderText("Полученная информация");
         	infAlert.setContentText(get);
         	infAlert.showAndWait();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		aboutWorkerNameField.setText("");
 	});
     	
     	updateWorkerOKButton.setOnAction(event-> {
-    		try {
     			String uni = "1";
     			if ((updateWorkerUnionCheckBox.isSelected())==true) uni="2";  
-				PreparedStatement ps = con.prepareStatement("UPDATE manage_workers SET w_name=?, w_position=?, w_level=? , if_trade_union =? WHERE Manage_users_login=?");
-				ps.setString(1, updateWorkerNameField.getText());
-				ps.setString(2, updateWorkerPosField.getText());
-				ps.setInt(3, Integer.parseInt(updateWorkerLvlField.getText()));
-				ps.setString(4, uni);
-				ps.setString(5, updateWorkerLoginField.getText());
-
-                int i = ps.executeUpdate();
+				int i = ManageWorkers.updateWorker(updateWorkerNameField.getText(), updateWorkerPosField.getText(), updateWorkerLvlField.getText(), uni, updateWorkerLoginField.getText());
                     if (i != 0) {
                     	Alert errorAlert = new Alert(AlertType.INFORMATION);
                     	errorAlert.setHeaderText("Sucessfully!");
@@ -301,9 +244,6 @@ public class ManageWorkersController {
                     	errorAlert.showAndWait();
                     }
                 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
     		updateWorkerLoginField.setText("");
     		updateWorkerNameField.setText("");
     		updateWorkerLvlField.setText("");

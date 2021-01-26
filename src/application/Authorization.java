@@ -1,17 +1,9 @@
 package application;
 
-//import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-//import javafx.fxml.FXMLLoader;
-//import javafx.scene.Parent;
-//import javafx.scene.Scene;
-//import javafx.scene.control.Alert;
-//import javafx.scene.control.Alert.AlertType;
-//import javafx.stage.Stage;
 
 public class Authorization {
 	private static final String url = "jdbc:mysql://localhost:3306/my";
