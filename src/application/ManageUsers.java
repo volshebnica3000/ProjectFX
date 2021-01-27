@@ -35,10 +35,7 @@ public class ManageUsers {
     		Connection con = DriverManager.getConnection (url,user,password);
     		PreparedStatement ps = con.prepareStatement("delete from manage_users where login=?");
 			ps.setString(1, deleteUserLoginField);
-             i = ps.executeUpdate();
-
-                
-            
+             i = ps.executeUpdate();              
     	} catch (ClassNotFoundException | SQLException e) {
     		e.printStackTrace();
     	}

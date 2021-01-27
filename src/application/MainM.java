@@ -16,6 +16,7 @@ public class MainM extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Application");
 			primaryStage.show();
+			primaryStage.setResizable(false);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

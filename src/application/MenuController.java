@@ -45,6 +45,7 @@ public class MenuController {
         	Parent root = loader.getRoot(); 
         	Stage stage = new Stage();
         	stage.setScene(new Scene(root));
+        	stage.setResizable(false);
         	stage.showAndWait();
         });
         
@@ -61,6 +62,7 @@ public class MenuController {
         	Parent root = loader.getRoot(); 
         	Stage stage = new Stage();
         	stage.setScene(new Scene(root));
+        	stage.setResizable(false);
         	stage.showAndWait();
         });
         
@@ -77,6 +79,7 @@ public class MenuController {
         	Parent root = loader.getRoot(); 
         	Stage stage = new Stage();
         	stage.setScene(new Scene(root));
+        	stage.setResizable(false);
         	stage.showAndWait();
         });
         toTariffButton.setOnAction(event -> {
@@ -92,6 +95,7 @@ public class MenuController {
         	Parent root = loader.getRoot(); 
         	Stage stage = new Stage();
         	stage.setScene(new Scene(root));
+        	stage.setResizable(false);
         	stage.showAndWait();
         });
     }
