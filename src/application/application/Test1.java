@@ -1,7 +1,6 @@
 package application;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,10 +9,16 @@ class Test1 {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		ManageWorkers.addWorker("Veronica", "trainer", "3", "2", "uru");
+		Pay.addPay("Veronica PP", "2200", "2222", "56", "55665");
+		Tariff.addTariff("10", "8");
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
+		ManageWorkers.deleteWorker("Veronica", "trainer");
+		Pay.deletePay("Veronica PP", "2200");
+		Tariff.deleteTariff("10", "8");
 	}
 
 	@Test
@@ -56,22 +61,27 @@ class Test1 {
 		String get = ManageUsers.aboutUser("user09");
 		assertEquals("Логин пользователя: user09\nПароль пользователя: 9999",get);
 	}
-//	@Test
-//	final void testAddWorker() {
-//		int i = ManageWorkers.addWorker("Veronica", "trainer", "3", "2", "uru");
-//		int Exp = 1;
-//		
-//		assertEquals(Exp, i);
-//	}
-//	
-//	@Test
-//	final void testUpdateWorker(){
-//		int exp = 1;
-//		int i = ManageWorkers.updateWorker("Veronica PP", "new", "1", "1", "uru");
-//		assertEquals(exp, i);
-//	}
-//	
+	@Test
+	final void testAddWorker() {
+		int i = ManageWorkers.addWorker("Veronica", "trainer", "3", "2", "uru");
+		int Exp = 1;
+		assertEquals(Exp, i);
+	}
 	
+	@Test
+	final void testUpdateWorker(){
+		int exp = 1;
+		int i = ManageWorkers.updateWorker("Veronica PP", "new", "1", "1", "uru");
+		assertEquals(exp, i);
+		ManageWorkers.addWorker("Veronica", "trainer", "3", "2", "uru");
+	}
+//	
+	@Test
+	final void deleteWorker(){
+		int exp = 1;
+		int i = ManageWorkers.deleteWorker("Veronica PP", "new");
+		assertEquals(exp, i);
+	}
 	
 	@Test
 	final void testAboutWorker() {
@@ -85,27 +95,27 @@ class Test1 {
 		assertEquals("ФИО: Otabek Altin\nЗаработная плата: 18596\nНачислено: 19600\nУдержано: 1100\nВсего выплачено: 30364", get);
 	}
 	
-//	@Test
-//	final void testAddPay() {
-//		int exp = 1;
-//		int i  = Pay.addPay("Veronica PP", "2200", "2222", "56", "55665");
-//		assertEquals(exp, i);
-//	}
-//	
-//	@Test
-//	final void testUpdatePay() {
-//		int exp = 1;
-//		int i  = Pay.updatePay("1", "2", "3", "4", "Veronica PP");
-//		assertEquals(exp, i);
-//	}
-//	
-//	
-//	@Test
-//	final void testDeletePay() {
-//		int i = Pay.deletePay("Veronica PP", "1");
-//		int exp = 1;
-//		assertEquals(exp, i);
-//	}
+	@Test
+	final void testAddPay() {
+		int exp = 1;
+		int i  = Pay.addPay("Veronica PP", "2200", "2222", "56", "55665");
+		assertEquals(exp, i);
+	}
+	
+	@Test
+	final void testUpdatePay() {
+		int exp = 1;
+		int i  = Pay.updatePay("1", "2", "3", "4", "Veronica PP");
+		assertEquals(exp, i);
+	}
+	
+	
+	@Test
+	final void testDeletePay() {
+		int i = Pay.deletePay("Veronica PP", "1");
+		int exp = 1;
+		assertEquals(exp, i);
+	}
 	
 	@Test
 	final void testAboutTariff(){
@@ -113,5 +123,28 @@ class Test1 {
 		assertEquals("Разряд: 3\nКоэффициент: 1.9", get);
 		String get2 = Tariff.aboutTariff("5");
 		assertEquals("Разряд: 5\nКоэффициент: 2.8", get2);
+	}
+	
+	@Test
+	final void testAddTariff() {
+		int i = Tariff.addTariff("10", "8");
+		int Exp = 1;
+		assertEquals(Exp, i);
+	}
+	
+	@Test
+	final void testUpdateTariff() {
+		int i = Tariff.updateTariff("9", "10");
+		int Exp = 1;
+		assertEquals(Exp, i);
+		Tariff.addTariff("10", "8");
+		
+	}
+	
+	@Test
+	final void testDeleteTariff() {
+		int i = Tariff.deleteTariff("10", "9");
+		int exp = 1;
+		assertEquals(exp, i);
 	}
 }
