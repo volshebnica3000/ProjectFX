@@ -1,4 +1,7 @@
 package application;
+import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.base.NodeMatchers.hasText;
+
 import java.io.IOException;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -15,7 +18,7 @@ public class TestFXManageWorkers extends ApplicationTest{
 		Scene scene = new Scene(root,700,400);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Application");
-		primaryStage.show();
+		primaryStage.show(); 
 		primaryStage.setResizable(false);
 	}
 	
@@ -30,6 +33,10 @@ public class TestFXManageWorkers extends ApplicationTest{
 		write("2");
 		clickOn ("#addWorkerLoginField");
 		write("user02");
+		verifyThat("#addWorkerNameField", hasText("Tatyana"));
+		verifyThat("#addWorkerPosField", hasText("turner"));
+		verifyThat("#addWorkerLvlField", hasText("2"));
+		verifyThat("#addWorkerLoginField", hasText("user02"));
 		clickOn ("#addWorkerOKButton");
 	}
 	@Test
@@ -43,6 +50,10 @@ public class TestFXManageWorkers extends ApplicationTest{
 		write("3");
 		clickOn ("#updateWorkerLoginField");
 		write("user02");
+		verifyThat("#updateWorkerNameField", hasText("Tatyana P"));
+		verifyThat("#updateWorkerPosField", hasText("trainer"));
+		verifyThat("#updateorkerLvlField", hasText("3"));
+		verifyThat("#updateWorkerLoginField", hasText("user02"));
 		clickOn ("#updateWorkerOKButton");
 	}
 	@Test
@@ -50,6 +61,7 @@ public class TestFXManageWorkers extends ApplicationTest{
 		clickOn ("#aboutWorkerButton",MouseButton.PRIMARY);
 		clickOn ("#aboutWorkerNameField");
 		write ("Tatyana P");
+		verifyThat("#aboutWorkerNameField", hasText("Tatyana P"));
 		clickOn ("#aboutWorkerOKButton");
 	}
 
@@ -60,6 +72,8 @@ public class TestFXManageWorkers extends ApplicationTest{
 		write ("Tatyana");
 		clickOn ("#deleteWorkerPosField");
 		write ("trainer");
+		verifyThat("#deleteWorkerNameField", hasText("Tatyana"));
+		verifyThat("#deleteWorkerPosField", hasText("trainer"));
 		clickOn ("#deleteWorkerOKButton");
 	}
 	

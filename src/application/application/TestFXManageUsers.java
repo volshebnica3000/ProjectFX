@@ -1,6 +1,8 @@
 package application;
 import java.io.IOException;
 import org.junit.Test;
+import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.base.NodeMatchers.hasText;
 import org.testfx.framework.junit.ApplicationTest;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,6 +27,8 @@ public class TestFXManageUsers extends ApplicationTest{
 		write ("Tatyana");
 		clickOn ("#addUserPasswordField");
 		write("4545");
+		verifyThat("#addUserLoginField", hasText("Tatyana"));
+		verifyThat("#addUserPasswordField", hasText("4545"));
 		clickOn ("#addUserOKButton");
 	}
 	@Test
@@ -34,6 +38,8 @@ public class TestFXManageUsers extends ApplicationTest{
 		write ("Tatyana");
 		clickOn ("#updateUserPasswordField");
 		write("4444");
+		verifyThat("#updateUserLoginField", hasText("Tatyana"));
+		verifyThat("#updateUserPasswordField", hasText("4444"));
 		clickOn ("#updateUserOKButton");
 	}
 	@Test
@@ -41,13 +47,15 @@ public class TestFXManageUsers extends ApplicationTest{
 		clickOn ("#aboutUserButton",MouseButton.PRIMARY);
 		clickOn ("#aboutUserLoginField");
 		write ("Tatyana");
+		verifyThat("#aboutUserLoginField", hasText("Tatyana"));
 		clickOn ("#aboutUserOKButton");
 	}
 	@Test
 	public void testSearchUser() {
 		clickOn ("#searchUserButton",MouseButton.PRIMARY);
-		clickOn ("#searchsearchUserLoginField");
+		clickOn ("#searchUserLoginField");
 		write ("Tatyana");
+		verifyThat("#searchUserLoginField", hasText("Tatyana"));
 		clickOn ("#searchUserOKButton");
 	}
 	@Test
@@ -55,6 +63,7 @@ public class TestFXManageUsers extends ApplicationTest{
 		clickOn ("#deleteUserButton",MouseButton.PRIMARY);
 		clickOn ("#deleteUserLoginField");
 		write ("Tatyana");
+		verifyThat("#deleteUserLoginField", hasText("Tatyana"));
 		clickOn ("#deleteUserOKButton");
 	}
 	

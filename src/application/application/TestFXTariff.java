@@ -1,4 +1,6 @@
 package application;
+import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.base.NodeMatchers.hasText;
 import java.io.IOException;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -26,7 +28,9 @@ public class TestFXTariff extends ApplicationTest{
 		write ("8");
 		clickOn ("#addTariffLvlField"); 
 		write("13");
-		clickOn ("#addTariffOKButton");;
+		verifyThat("#addTariffCoefField", hasText("8"));
+		verifyThat("#addTariffLvlField", hasText("13"));
+		clickOn ("#addTariffOKButton");
 	}
 	@Test
 	public void testUpdateTariff() {
@@ -35,6 +39,8 @@ public class TestFXTariff extends ApplicationTest{
 		write ("3.3");
 		clickOn ("#updateTariffLvlField");
 		write("13");
+		verifyThat("#updateTariffCoefField", hasText("3.3"));
+		verifyThat("#updateTariffLvlField", hasText("13"));
 		clickOn ("#updateTariffOKButton");
 	}
 	@Test
@@ -42,6 +48,7 @@ public class TestFXTariff extends ApplicationTest{
 		clickOn ("#aboutTariffButton",MouseButton.PRIMARY);
 		clickOn ("#aboutTariffLvlLabel");
 		write ("13");
+		verifyThat("#aboutTariffLvlLabel", hasText("13"));
 		clickOn ("#aboutTariffOKButton");
 	}
 
@@ -52,6 +59,8 @@ public class TestFXTariff extends ApplicationTest{
 		write ("3.3");
 		clickOn ("#deleteTariffLvlField");
 		write ("13");
+		verifyThat("#deleteTariffCoefField", hasText("3.3"));
+		verifyThat("#deleteTariffLvlField", hasText("13"));
 		clickOn ("#deleteTariffOKButton");
 	}
 	

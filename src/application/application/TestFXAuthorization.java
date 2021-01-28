@@ -2,6 +2,9 @@ package application;
 import java.io.IOException;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.base.NodeMatchers.hasText;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
@@ -24,6 +27,8 @@ public class TestFXAuthorization extends ApplicationTest{
 		write ("uru");
 		clickOn ("#passwordField");
 		write("1212");
+		verifyThat("#loginField", hasText("uru"));
+		verifyThat("#passwordField", hasText("1212"));
 		clickOn ("#signInButton");
 	}
 }

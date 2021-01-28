@@ -1,4 +1,6 @@
 package application;
+import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.base.NodeMatchers.hasText;
 import java.io.IOException;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -30,6 +32,10 @@ public class TestFXPay extends ApplicationTest{
 		write("2222");
 		clickOn ("#addPayChargePayField");
 		write("33333");
+		verifyThat("#addPayNameField", hasText("Tatyana"));
+		verifyThat("#addPayPaymentField", hasText("11111"));
+		verifyThat("#addPayHoldPayField", hasText("2222"));
+		verifyThat("#addPayChargePayField", hasText("33333"));
 		clickOn ("#addPayOKButton");
 	}
 	@Test
@@ -43,6 +49,10 @@ public class TestFXPay extends ApplicationTest{
 		write("3333");
 		clickOn ("#updatePayChargePayField");
 		write("323232");
+		verifyThat("#updatePayNameField", hasText("Tatyana P"));
+		verifyThat("#updatePayPaymentField", hasText("232323"));
+		verifyThat("#updatePayHoldPayField", hasText("3333"));
+		verifyThat("#updatePayChargePayField", hasText("323232"));
 		clickOn ("#updatePayOKButton");
 	}
 	@Test
@@ -50,6 +60,7 @@ public class TestFXPay extends ApplicationTest{
 		clickOn ("#aboutPayButton",MouseButton.PRIMARY);
 		clickOn ("#aboutPayNameField");
 		write ("Tatyana");
+		verifyThat("#aboutPayNameField", hasText("Tatyana"));
 		clickOn ("#aboutPayOKButton");
 	}
 
@@ -60,6 +71,8 @@ public class TestFXPay extends ApplicationTest{
 		write ("Tatyana");
 		clickOn ("#deletePayPaymentField");
 		write ("232323");
+		verifyThat("#deletePayNameField", hasText("Tatyana"));
+		verifyThat("#deletePayPaymentField", hasText("232323"));
 		clickOn ("#deletePayOKButton");
 	}
 	
